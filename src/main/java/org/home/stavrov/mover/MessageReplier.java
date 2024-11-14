@@ -24,17 +24,18 @@ public class MessageReplier extends CommonMover {
 
     @Override
     protected void executeMoverStep() {
+        // TODO
         //            List<WinDef.HWND> openWindows = WindowUtils.getOpenWindows();
-        Map<WinDef.HWND, WindowInfo> openWindows = WindowUtils.getOpenWindows();
-        for (Map.Entry<WinDef.HWND, WindowInfo> hwndWindowInfoEntry : openWindows.entrySet()) {
-            String winName = hwndWindowInfoEntry.getValue().getName();
-            if (winName.contains("Chrome")) {
-                user32.ShowWindow(hwndWindowInfoEntry.getKey(), User32.SW_RESTORE);
-                user32.SetForegroundWindow(hwndWindowInfoEntry.getKey());
-                robot.keyPress(KeyEvent.VK_F5);
-            }
-        }
-        System.out.println(openWindows);
+//        Map<WinDef.HWND, WindowInfo> openWindows = WindowUtils.getOpenWindows();
+//        for (Map.Entry<WinDef.HWND, WindowInfo> hwndWindowInfoEntry : openWindows.entrySet()) {
+//            String winName = hwndWindowInfoEntry.getValue().getName();
+//            if (winName.contains("Chrome")) {
+//                user32.ShowWindow(hwndWindowInfoEntry.getKey(), User32.SW_RESTORE);
+//                user32.SetForegroundWindow(hwndWindowInfoEntry.getKey());
+//                robot.keyPress(KeyEvent.VK_F5);
+//            }
+//        }
+//        System.out.println(openWindows);
     }
 
 }
