@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ImitationOfIntenseActivity {
-    public static final int DELAY = 3000;
+    public static final int DELAY = 15000;
     public static final String MAIN_WINDOW_HEADER = "Imitation Of Intense Activity";
 
     private static final List<Thread> threads = new ArrayList<>();
