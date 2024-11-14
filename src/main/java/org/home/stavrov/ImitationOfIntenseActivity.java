@@ -1,5 +1,6 @@
 package org.home.stavrov;
 
+import org.home.stavrov.mover.CommonMover;
 import org.home.stavrov.mover.MessageReplier;
 import org.home.stavrov.mover.MouseMover;
 import org.home.stavrov.mover.WindowSwitcher;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ImitationOfIntenseActivity {
-    public static final int DELAY = 10000;
+    public static final int DELAY = 3000;
     public static final String MAIN_WINDOW_HEADER = "Imitation Of Intense Activity";
 
     private static final List<Thread> threads = new ArrayList<>();
@@ -25,7 +26,7 @@ public class ImitationOfIntenseActivity {
     private static void addStartStopButton(JFrame frame) {
         var moveButton = new JButton("Start/Stop");
         frame.add(moveButton, BorderLayout.CENTER);
-        Runnable[] movers = {
+        CommonMover[] movers = {
                 new MouseMover(moveButton),
                 new WindowSwitcher(),
                 new MessageReplier()
@@ -50,7 +51,7 @@ public class ImitationOfIntenseActivity {
         return frame;
     }
 
-    private static void startThreads(Runnable... movers) {
+    private static void startThreads(CommonMover... movers) {
         for (Runnable mover : movers) {
             Thread thread = new Thread(mover);
             thread.start();

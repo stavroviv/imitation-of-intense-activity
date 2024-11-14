@@ -1,39 +1,24 @@
 package org.home.stavrov.mover;
 
-import com.sun.jna.Native;
-import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
+import org.home.stavrov.utils.WindowUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.home.stavrov.ImitationOfIntenseActivity.DELAY;
 import static org.home.stavrov.ImitationOfIntenseActivity.MAIN_WINDOW_HEADER;
 
-public class WindowSwitcher implements Runnable {
+public class WindowSwitcher extends CommonMover {
     private final User32 user32 = User32.INSTANCE;
     private final List<WinDef.HWND> windowList = new ArrayList<>();
     private int currentIndex = 0;
     private final List<String> EXCLUDE_WIN = List.of(MAIN_WINDOW_HEADER, "Settings", "Program Manager");
 
     @Override
-    public void run() {
-        while (!Thread.currentThread().isInterrupted()) {
-            try {
-                switchToNextWindow();
-                Thread.sleep(DELAY);
-            } catch (Exception ex) {
-                System.out.println("InterruptedException WindowSwitcher");
-                return;
-            }
-        }
-        System.out.println("stoped WindowSwitcher");
-    }
-
-    public void switchToNextWindow() throws Exception {
+    protected void executeMoverStep() throws Exception {
         if (windowList.isEmpty()) {
-            updateWindowList();
+            windowList.addAll(WindowUtils.getOpenWindows(EXCLUDE_WIN).keySet());
         }
         if (windowList.isEmpty()) {
             System.out.println("No windows found.");
@@ -53,22 +38,5 @@ public class WindowSwitcher implements Runnable {
             System.out.println(result);
             i++;
         }
-
-    }
-
-    private void updateWindowList() {
-        windowList.clear();
-        user32.EnumWindows((hwnd, pointer) -> {
-            if (user32.IsWindowVisible(hwnd) && user32.GetWindowTextLength(hwnd) > 0) {
-                var windowText = new char[512];
-                user32.GetWindowText(hwnd, windowText, 512);
-                var wText = Native.toString(windowText).trim();
-                if (!EXCLUDE_WIN.contains(wText)) {
-                    windowList.add(hwnd);
-                }
-                System.out.println("Window title: " + wText);
-            }
-            return true;
-        }, Pointer.NULL);
     }
 }
