@@ -6,7 +6,6 @@ import org.home.stavrov.utils.WindowInfo;
 import org.home.stavrov.utils.WindowUtils;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.Map;
 
 public class MessageReplier extends CommonMover {
@@ -25,6 +24,9 @@ public class MessageReplier extends CommonMover {
     @Override
     protected void executeMoverStep() {
         // TODO
+        Map<WinDef.HWND, WindowInfo> teams =
+                WindowUtils.getOpenWindowsByFilter(name -> name.contains("Microsoft Teams"));
+        System.out.println(teams);
         //            List<WinDef.HWND> openWindows = WindowUtils.getOpenWindows();
 //        Map<WinDef.HWND, WindowInfo> openWindows = WindowUtils.getOpenWindows();
 //        for (Map.Entry<WinDef.HWND, WindowInfo> hwndWindowInfoEntry : openWindows.entrySet()) {

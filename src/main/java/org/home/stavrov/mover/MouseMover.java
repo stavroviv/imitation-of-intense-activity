@@ -19,12 +19,11 @@ public class MouseMover extends CommonMover {
     }
 
     @Override
-    protected void executeMoverStep() throws Exception {
+    protected void executeMoverStep() {
         var buttonLocation = moveButton.getLocationOnScreen();
         var buttonSize = moveButton.getSize();
         var x = buttonLocation.x + (int) (Math.random() * buttonSize.width);
         var y = buttonLocation.y + (int) (Math.random() * buttonSize.height);
         robot.mouseMove(x, y);
-        Thread.sleep(DELAY);
     }
 }
