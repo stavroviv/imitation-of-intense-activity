@@ -38,7 +38,7 @@ public class WindowUtils {
                     value.setName(windowName);
                     openedWindows.put(hwnd, value);
                 }
-                System.out.println("Window title: " + windowName);
+//                System.out.println("Window title: " + windowName);
             }
             return true;
         }, Pointer.NULL);
