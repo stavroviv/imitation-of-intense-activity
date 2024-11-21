@@ -33,8 +33,6 @@ public class WindowSwitcher extends CommonMover {
         while (!result && i < 5) {
             Thread.sleep(1000);
             result = user32.SetForegroundWindow(nextWindow);
-//            user32.BringWindowToTop(nextWindow);
-//            user32.SetFocus(nextWindow);
             System.out.println(result);
             i++;
         }

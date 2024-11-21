@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ImitationOfIntenseActivity {
-    public static final int DELAY = 15000;
+    public static final int DELAY = 2000;
     public static final String MAIN_WINDOW_HEADER = "Imitation Of Intense Activity";
 
     private static boolean isRunning;
@@ -21,14 +21,7 @@ public class ImitationOfIntenseActivity {
     private static void addStartStopButton(JFrame frame) {
         var moveButton = new JButton("Start");
         frame.add(moveButton, BorderLayout.CENTER);
-        JTextArea textArea = new JTextArea();
-        frame.add(textArea, BorderLayout.AFTER_LAST_LINE);
-        CommonMover[] movers = {
-                new MouseMover(moveButton),
-                new WindowSwitcher(),
-                new MessageReplier(),
-//                new ScreenshotChecker(textArea)
-        };
+
         moveButton.addActionListener(e -> {
             if (isRunning) {
                 isRunning = false;
@@ -37,6 +30,12 @@ public class ImitationOfIntenseActivity {
             } else {
                 isRunning = true;
                 moveButton.setText("Stop");
+                CommonMover[] movers = {
+//                new MouseMover(moveButton),
+//                new WindowSwitcher(),
+//                new MessageReplier(),
+                        new ScreenshotChecker()
+                };
                 startExecution(movers);
             }
         });
