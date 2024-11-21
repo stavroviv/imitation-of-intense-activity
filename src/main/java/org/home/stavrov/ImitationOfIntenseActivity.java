@@ -4,15 +4,13 @@ import org.home.stavrov.mover.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ImitationOfIntenseActivity {
     public static final int DELAY = 5000;
     public static final String MAIN_WINDOW_HEADER = "Imitation Of Intense Activity";
 
-    private static final List<Thread> threads = new ArrayList<>();
     private static boolean isRunning;
+    private static Thread executionThread;
 
     public static void main(String[] args) {
         var frame = createMainFrame();
@@ -23,21 +21,23 @@ public class ImitationOfIntenseActivity {
     private static void addStartStopButton(JFrame frame) {
         var moveButton = new JButton("Start");
         frame.add(moveButton, BorderLayout.CENTER);
+        JTextArea textArea = new JTextArea();
+        frame.add(textArea, BorderLayout.AFTER_LAST_LINE);
         CommonMover[] movers = {
-//                new MouseMover(moveButton),
-//                new WindowSwitcher(),
-//                new MessageReplier(),
-                new ScreenshotChecker()
+                new MouseMover(moveButton),
+                new WindowSwitcher(),
+                new MessageReplier(),
+                new ScreenshotChecker(textArea)
         };
         moveButton.addActionListener(e -> {
             if (isRunning) {
                 isRunning = false;
                 moveButton.setText("Start");
-                stopThreads();
+                stopExecution();
             } else {
                 isRunning = true;
                 moveButton.setText("Stop");
-                startThreads(movers);
+                startExecution(movers);
             }
         });
     }
@@ -51,26 +51,21 @@ public class ImitationOfIntenseActivity {
         return frame;
     }
 
-    private static void startThreads(CommonMover... movers) {
-        for (Runnable mover : movers) {
-            Thread thread = new Thread(mover);
-            thread.start();
-            threads.add(thread);
-        }
-    }
-
-    private static void stopThreads() {
-        for (Thread thread : threads) {
-            if (thread != null && thread.isAlive()) {
-                try {
-                    thread.interrupt();
-                    thread.join();
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
+    private static void startExecution(CommonMover... movers) {
+        executionThread = new Thread(() -> {
+            while (isRunning) {
+                for (CommonMover mover : movers) {
+                    if (isRunning) {
+                        mover.run();
+                    }
                 }
             }
-        }
-        threads.clear();
+        });
+        executionThread.start();
+    }
+
+    private static void stopExecution() {
+        executionThread.interrupt();
     }
 
 }

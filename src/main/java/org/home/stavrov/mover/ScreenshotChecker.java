@@ -6,6 +6,7 @@ import com.sun.jna.platform.win32.WinDef;
 import org.home.stavrov.utils.WindowInfo;
 import org.home.stavrov.utils.WindowUtils;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.security.MessageDigest;
@@ -18,6 +19,11 @@ public class ScreenshotChecker extends CommonMover {
     int i = 0;
     private static byte[] prev;
     private static byte[] curr;
+    JTextArea textArea;
+    public ScreenshotChecker(JTextArea textArea) {
+        super();
+        this.textArea = textArea;
+    }
 
     @Override
     protected void executeMoverStep() throws Exception {
@@ -27,6 +33,7 @@ public class ScreenshotChecker extends CommonMover {
         curr = calculateImageHash(bufferedImage);
         if (prev != null && !Arrays.equals(prev,curr)) {
             System.out.println("Change!!! prev: " + new String(prev) + " curr: " + new String(curr));
+            textArea.setText("Change!!! prev: " + new String(prev) + " curr: " + new String(curr));
         }
         prev = curr;
 //        System.out.println("Hash: " + new String(bytes));
