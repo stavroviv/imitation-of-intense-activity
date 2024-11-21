@@ -24,7 +24,7 @@ public class ImitationOfIntenseActivity {
     }
 
     private static void addStartStopButton(JFrame frame) {
-        var moveButton = new JButton("Start/Stop");
+        var moveButton = new JButton("Start");
         frame.add(moveButton, BorderLayout.CENTER);
         CommonMover[] movers = {
                 new MouseMover(moveButton),
@@ -34,9 +34,11 @@ public class ImitationOfIntenseActivity {
         moveButton.addActionListener(e -> {
             if (isRunning) {
                 isRunning = false;
+                moveButton.setText("Start");
                 stopThreads();
             } else {
                 isRunning = true;
+                moveButton.setText("Stop");
                 startThreads(movers);
             }
         });
