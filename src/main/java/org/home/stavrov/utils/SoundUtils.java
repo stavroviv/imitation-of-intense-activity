@@ -7,7 +7,8 @@ import javax.sound.sampled.SourceDataLine;
 
 public class SoundUtils {
 
-    // Frequencies for the notes
+    private static final float SAMPLE_RATE = 44100;// Amplitude (volume)
+    private static final int AMPLITUDE = 15;
     private static final double[] NOTES = {
             261.63, // C4
             293.66, // D4
@@ -24,11 +25,12 @@ public class SoundUtils {
     private static final int CHORD_DURATION = 200; // in milliseconds
     private static final int REST_DURATION = 200;   // Duration between chords (rest)
 
-    public static void main(String[] args) {
-        playSound();
-    }
     private SoundUtils() {
 
+    }
+
+    public static void main(String[] args) {
+        playSound();
     }
 
     public static void playSound() {
@@ -41,12 +43,8 @@ public class SoundUtils {
     }
 
     private static void playChordProgression() throws LineUnavailableException {
-        // Audio settings
-        float sampleRate = 44100; // Samples per second
-        int amplitude = 15; // Amplitude (volume)
-
         // Set up the audio format
-        AudioFormat format = new AudioFormat(sampleRate, 8, 1, true, false);
+        AudioFormat format = new AudioFormat(SAMPLE_RATE, 8, 1, true, false);
         SourceDataLine line = AudioSystem.getSourceDataLine(format);
         line.open(format);
         line.start();
@@ -62,7 +60,7 @@ public class SoundUtils {
 
         // Generate and play the chord progression
         for (double[] chord : chordProgression) {
-            playChordNotes(line, chord, CHORD_DURATION, sampleRate, amplitude);
+            playChordNotes(line, chord, CHORD_DURATION, SAMPLE_RATE, AMPLITUDE);
             try {
                 Thread.sleep(REST_DURATION); // Pause between chords
             } catch (InterruptedException e) {
