@@ -49,7 +49,7 @@ public class ScreenshotChecker extends CommonMover {
         if (prev != null) {
             double v = calculateSimilarity(curr, prev);
             System.out.println(v);
-            if (v < 0.94) {
+            if (v < 0.94 && v > 0.5) {
                 imageDisplayWindow.addImages(prevImage, currImage);
                 imageDisplayWindow.setVisible(true);
                 SoundUtils.playSound();
