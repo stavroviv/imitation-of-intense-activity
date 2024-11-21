@@ -5,6 +5,7 @@ import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
 import org.home.stavrov.utils.WindowInfo;
 import org.home.stavrov.utils.WindowUtils;
+import org.home.stavrov.windows.ImageDisplayWindow;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,23 +20,34 @@ public class ScreenshotChecker extends CommonMover {
     int i = 0;
     private static byte[] prev;
     private static byte[] curr;
+
+    private static BufferedImage prevImage;
+    private static BufferedImage currImage;
+
     JTextArea textArea;
+    ImageDisplayWindow imageDisplayWindow;
+
     public ScreenshotChecker(JTextArea textArea) {
         super();
         this.textArea = textArea;
+        this.imageDisplayWindow = new ImageDisplayWindow();
     }
 
     @Override
     protected void executeMoverStep() throws Exception {
         Map<WinDef.HWND, WindowInfo> teams =
                 WindowUtils.getOpenWindowsByFilter(name -> name.contains("Prod D7MVS logs"));
-        BufferedImage bufferedImage = captureWindow(teams.keySet().iterator().next());
-        curr = calculateImageHash(bufferedImage);
-        if (prev != null && !Arrays.equals(prev,curr)) {
+        currImage = captureWindow(teams.keySet().iterator().next());
+        curr = calculateImageHash(currImage);
+        if (prev != null && !Arrays.equals(prev, curr)) {
             System.out.println("Change!!! prev: " + new String(prev) + " curr: " + new String(curr));
             textArea.setText("Change!!! prev: " + new String(prev) + " curr: " + new String(curr));
+            imageDisplayWindow.addImages(prevImage, currImage);
+            imageDisplayWindow.setVisible(true);
+//            imageDisplayWindow
         }
         prev = curr;
+        prevImage = currImage;
 //        System.out.println("Hash: " + new String(bytes));
     }
 

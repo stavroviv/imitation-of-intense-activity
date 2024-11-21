@@ -12,7 +12,6 @@ public abstract class CommonMover {
             System.out.println("InterruptedException " + this.getClass().getName());
             return;
         }
-        System.out.println("stoped " + this.getClass().getName());
     }
 
     protected abstract void executeMoverStep() throws Exception;

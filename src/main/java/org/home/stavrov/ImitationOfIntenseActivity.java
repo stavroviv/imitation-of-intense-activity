@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ImitationOfIntenseActivity {
-    public static final int DELAY = 5000;
+    public static final int DELAY = 15000;
     public static final String MAIN_WINDOW_HEADER = "Imitation Of Intense Activity";
 
     private static boolean isRunning;
@@ -27,7 +27,7 @@ public class ImitationOfIntenseActivity {
                 new MouseMover(moveButton),
                 new WindowSwitcher(),
                 new MessageReplier(),
-                new ScreenshotChecker(textArea)
+//                new ScreenshotChecker(textArea)
         };
         moveButton.addActionListener(e -> {
             if (isRunning) {
