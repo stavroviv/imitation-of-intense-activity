@@ -22,8 +22,8 @@ public class ImageDisplayWindow extends JFrame {
         add(scrollPane);
     }
 
-    public void addImages(BufferedImage image1, BufferedImage image2) {
-        mainPanel.add(new ImagePanel(image1, image2));
+    public void addImages(BufferedImage image1, BufferedImage image2, double similarity) {
+        mainPanel.add(new ImagePanel(image1, image2, similarity));
         SwingUtilities.invokeLater(() -> {
             mainPanel.revalidate();
             mainPanel.repaint();
@@ -34,17 +34,17 @@ public class ImageDisplayWindow extends JFrame {
     }
 
     static class ImagePanel extends JPanel {
-        private BufferedImage image1;
-        private BufferedImage image2;
+        private final BufferedImage image1;
+        private final BufferedImage image2;
 
-        public ImagePanel(BufferedImage image1, BufferedImage image2) {
+        public ImagePanel(BufferedImage image1, BufferedImage image2, double similarity) {
             this.image1 = image1;
             this.image2 = image2;
             // Set the layout manager
             setLayout(new BorderLayout());
 
             // Create and add the JTextArea at the top
-            JTextArea textArea = new JTextArea("Time: " + LocalDateTime.now());
+            JTextArea textArea = new JTextArea("Time: " + LocalDateTime.now() + " similarity: " +  similarity);
             textArea.setEditable(false); // Make it read-only
             add(textArea, BorderLayout.NORTH); // Add at the top
 

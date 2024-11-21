@@ -47,10 +47,10 @@ public class ScreenshotChecker extends CommonMover {
         curr = calculateHistogram(currImage);
 
         if (prev != null) {
-            double v = calculateSimilarity(curr, prev);
-            System.out.println(v);
-            if (v < 0.94 && v > 0.5) {
-                imageDisplayWindow.addImages(prevImage, currImage);
+            double similarity = calculateSimilarity(curr, prev);
+            System.out.println(similarity);
+            if (similarity < 0.94 && similarity > 0.5) {
+                imageDisplayWindow.addImages(prevImage, currImage, similarity);
                 imageDisplayWindow.setVisible(true);
                 SoundUtils.playSound();
             }
