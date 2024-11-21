@@ -20,16 +20,15 @@ public class MouseMover extends CommonMover {
 
     @Override
     protected void executeMoverStep() {
-        for (int i = 0; i < 5; i++) {
-            MouseUtils.moveMouseToBorderAndReturnAfterAction(() -> {
+        MouseUtils.moveMouseToBorderAndReturnAfterAction(() -> {
+            for (int i = 0; i < 5; i++) {
                 var buttonLocation = moveButton.getLocationOnScreen();
                 var buttonSize = moveButton.getSize();
                 var x = buttonLocation.x + (int) (Math.random() * buttonSize.width);
                 var y = buttonLocation.y + (int) (Math.random() * buttonSize.height);
                 robot.mouseMove(x, y);
                 Thread.sleep(200);
-            });
-
-        }
+            }
+        });
     }
 }

@@ -6,7 +6,8 @@ import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 
 public class ImageDisplayWindow extends JFrame {
-    JPanel mainPanel;
+    private final JPanel mainPanel;
+    private final JScrollPane scrollPane;
 
     public ImageDisplayWindow() {
         setTitle("Screenshot difference");
@@ -15,7 +16,7 @@ public class ImageDisplayWindow extends JFrame {
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS)); // Vertical alignment
 
-        JScrollPane scrollPane = new JScrollPane(mainPanel);
+        scrollPane = new JScrollPane(mainPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         add(scrollPane);
@@ -23,6 +24,13 @@ public class ImageDisplayWindow extends JFrame {
 
     public void addImages(BufferedImage image1, BufferedImage image2) {
         mainPanel.add(new ImagePanel(image1, image2));
+        SwingUtilities.invokeLater(() -> {
+            mainPanel.revalidate();
+            mainPanel.repaint();
+            JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+            verticalScrollBar.setValue(verticalScrollBar.getMaximum());
+        });
+
     }
 
     static class ImagePanel extends JPanel {

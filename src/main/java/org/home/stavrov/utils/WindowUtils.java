@@ -5,6 +5,10 @@ import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.SourceDataLine;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -44,5 +48,4 @@ public class WindowUtils {
         }, Pointer.NULL);
         return openedWindows;
     }
-
 }

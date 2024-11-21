@@ -14,6 +14,7 @@ public class MessageReplier extends CommonMover {
     private final Robot robot;
 
     public MessageReplier() {
+        // TODO under construction
         try {
             this.robot = new Robot();
         } catch (Exception e) {
@@ -24,9 +25,9 @@ public class MessageReplier extends CommonMover {
     @Override
     protected void executeMoverStep() {
         // TODO
-        Map<WinDef.HWND, WindowInfo> teams =
-                WindowUtils.getOpenWindowsByFilter(name -> name.contains("Microsoft Teams"));
-        System.out.println(teams);
+//        Map<WinDef.HWND, WindowInfo> teams =
+//                WindowUtils.getOpenWindowsByFilter(name -> name.contains("Microsoft Teams"));
+//        System.out.println(teams);
         //            List<WinDef.HWND> openWindows = WindowUtils.getOpenWindows();
 //        Map<WinDef.HWND, WindowInfo> openWindows = WindowUtils.getOpenWindows();
 //        for (Map.Entry<WinDef.HWND, WindowInfo> hwndWindowInfoEntry : openWindows.entrySet()) {

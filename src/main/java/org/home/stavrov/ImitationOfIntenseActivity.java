@@ -1,6 +1,7 @@
 package org.home.stavrov;
 
-import org.home.stavrov.mover.*;
+import org.home.stavrov.mover.CommonMover;
+import org.home.stavrov.mover.ScreenshotChecker;
 
 import javax.swing.*;
 import java.awt.*;
@@ -31,9 +32,8 @@ public class ImitationOfIntenseActivity {
                 isRunning = true;
                 moveButton.setText("Stop");
                 CommonMover[] movers = {
-//                new MouseMover(moveButton),
-//                new WindowSwitcher(),
-//                new MessageReplier(),
+//                        new MouseMover(moveButton),
+//                        new WindowSwitcher(),
                         new ScreenshotChecker()
                 };
                 startExecution(movers);

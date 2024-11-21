@@ -4,6 +4,7 @@ import com.sun.jna.platform.win32.GDI32;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
 import org.home.stavrov.utils.MouseUtils;
+import org.home.stavrov.utils.SoundUtils;
 import org.home.stavrov.utils.WindowInfo;
 import org.home.stavrov.utils.WindowUtils;
 import org.home.stavrov.windows.ImageDisplayWindow;
@@ -44,12 +45,14 @@ public class ScreenshotChecker extends CommonMover {
         }
         currImage = captureWindow(teams.keySet().iterator().next());
         curr = calculateHistogram(currImage);
+
         if (prev != null) {
             double v = calculateSimilarity(curr, prev);
             System.out.println(v);
             if (v < 0.94) {
                 imageDisplayWindow.addImages(prevImage, currImage);
                 imageDisplayWindow.setVisible(true);
+                SoundUtils.playSound();
             }
         }
         prev = curr;
