@@ -7,7 +7,7 @@ import org.home.stavrov.utils.WindowUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.home.stavrov.ImitationOfIntenseActivity.MAIN_WINDOW_HEADER;
+import static org.home.stavrov.windows.MainWindow.MAIN_WINDOW_HEADER;
 
 public class WindowSwitcher extends CommonMover {
     private final User32 user32 = User32.INSTANCE;
