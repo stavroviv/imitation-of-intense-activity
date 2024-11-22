@@ -45,7 +45,7 @@ public class ScreenshotChecker extends CommonMover {
 
         currImage = captureWindow(windowInfo.getId());
         curr = ImageParsingUtils.parseImage(currImage, ExecutionContext.getPatternToFollow());
-
+        System.out.println("Curr parsed value: " + curr);
         if (prev != null && !curr.equals(prev) && !prev.isEmpty() && !curr.isEmpty()) {
             imageDisplayWindow.addImages(prevImage, currImage, "Prev value: " + prev + " curr value: " + curr);
             imageDisplayWindow.setVisible(true);
