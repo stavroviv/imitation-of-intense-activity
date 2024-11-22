@@ -1,6 +1,7 @@
 package org.home.stavrov.windows;
 
 import com.sun.jna.platform.win32.WinDef;
+import org.home.stavrov.mover.ExecutionContext;
 import org.home.stavrov.mover.ExecutionCycle;
 import org.home.stavrov.utils.WindowInfo;
 import org.home.stavrov.utils.WindowUtils;
@@ -37,6 +38,7 @@ public class MainWindow extends JFrame {
             return;
         }
         var id = (String) openWindowsTableModel.getValueAt(selectedRow, 1);
+        ExecutionContext.setWindowToFollowId(id);
 
         boolean isRunning = ExecutionCycle.process();
         executionButton.setText(isRunning ? "Stop" : "Start");

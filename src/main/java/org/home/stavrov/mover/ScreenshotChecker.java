@@ -23,7 +23,6 @@ public class ScreenshotChecker extends CommonMover {
     private static BufferedImage currImage;
 
     private ImageDisplayWindow imageDisplayWindow;
-    private String windowToFollowId;
 
     public ScreenshotChecker() {
         super();
@@ -35,14 +34,10 @@ public class ScreenshotChecker extends CommonMover {
         }
     }
 
-    public void init(String windowToFollowId) {
-        this.windowToFollowId = windowToFollowId;
-    }
-
     @Override
     protected void executeMoverStep() throws Exception {
         var openWindows = WindowUtils.getOpenWindows();
-        WindowInfo windowInfo = openWindows.get(windowToFollowId);
+        WindowInfo windowInfo = openWindows.get(ExecutionContext.getWindowToFollowId());
         if (Objects.isNull(windowInfo)) {
             System.out.println("window not found");
             return;
