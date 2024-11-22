@@ -1,20 +1,17 @@
 package org.home.stavrov.windows;
 
-import com.sun.jna.platform.win32.WinDef;
 import org.home.stavrov.mover.ExecutionContext;
 import org.home.stavrov.mover.ExecutionCycle;
-import org.home.stavrov.utils.WindowInfo;
 import org.home.stavrov.utils.WindowUtils;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import java.awt.*;
-import java.util.Map;
 
 public class MainWindow extends JFrame {
     public static final String MAIN_WINDOW_HEADER = "Imitation Of Intense Activity";
     private static JButton executionButton;
+    private JButton refreshButton;
     private DefaultTableModel openWindowsTableModel;
     private JTable openWindowsTable;
 
@@ -31,7 +28,7 @@ public class MainWindow extends JFrame {
         add(executionButton, BorderLayout.SOUTH);
     }
 
-    private  void processExecution() {
+    private void processExecution() {
         var selectedRow = openWindowsTable.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Select window to follow");
@@ -42,6 +39,12 @@ public class MainWindow extends JFrame {
 
         var isRunning = ExecutionCycle.process();
         executionButton.setText(isRunning ? "Stop" : "Start");
+        disableWindowTable(isRunning);
+    }
+
+    private void disableWindowTable(boolean isRunning) {
+        openWindowsTable.setEnabled(!isRunning);
+        refreshButton.setEnabled(!isRunning);
     }
 
     private void addTable() {
@@ -53,9 +56,9 @@ public class MainWindow extends JFrame {
         var panelFlow = new JPanel();
         panelFlow.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        var button = new JButton("Refresh");
-        button.addActionListener(e -> refreshWindowTable());
-        panelFlow.add(button);
+        refreshButton = new JButton("Refresh");
+        refreshButton.addActionListener(e -> refreshWindowTable());
+        panelFlow.add(refreshButton);
 
         panel.add(panelFlow, BorderLayout.NORTH);
 
@@ -106,7 +109,7 @@ public class MainWindow extends JFrame {
 
     private void setFrameProperties() {
         setTitle(MAIN_WINDOW_HEADER);
-        setSize(700, 700);
+        setSize(900, 650);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
