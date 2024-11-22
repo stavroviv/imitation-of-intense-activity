@@ -17,8 +17,8 @@ public class ExecutionCycle {
 
     private static void startExecution() {
         CommonMover[] movers = {
-                new MouseMover(),
-                new WindowSwitcher(),
+//                new MouseMover(),
+//                new WindowSwitcher(),
                 new ScreenshotChecker()
         };
         executionThread = new Thread(() -> {

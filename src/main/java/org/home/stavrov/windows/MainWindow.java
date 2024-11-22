@@ -94,15 +94,16 @@ public class MainWindow extends JFrame {
         };
         openWindowsTable = new JTable(openWindowsTableModel);
         refreshWindowTable();
-        setColumnWidth(openWindowsTable);
-
+        setColumnWidth();
+        openWindowsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         return openWindowsTable;
     }
 
-    private static void setColumnWidth(JTable table) {
-        var column = table.getColumnModel().getColumn(0);
+    private void setColumnWidth() {
+        var columnModel = openWindowsTable.getColumnModel();
+        var column = columnModel.getColumn(0);
         column.setMaxWidth(30);
-        column = table.getColumnModel().getColumn(1);
+        column = columnModel.getColumn(1);
         column.setMaxWidth(100);
         column.setMinWidth(100);
     }

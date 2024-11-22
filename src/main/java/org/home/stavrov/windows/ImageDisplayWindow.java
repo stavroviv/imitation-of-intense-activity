@@ -46,28 +46,16 @@ public class ImageDisplayWindow extends JFrame {
             textArea.setEditable(false);
             add(textArea, BorderLayout.NORTH);
 
-            setPreferredSize(new Dimension(600, 650));
+            setPreferredSize(new Dimension(600, 450));
         }
 
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            // Get the current size of the JFrame (window)
             var frameWidth = getWidth();
             var frameHeight = getHeight();
-
-            // Calculate half of the width and height for the images
-            var width1 = frameWidth / 2;  // Half of the JFrame's width
-            var height1 = frameHeight * 80 / 100; // Half of the JFrame's height
-
-            var width2 = frameWidth / 2;  // Half of the JFrame's width
-            var height2 = frameHeight * 80 / 100; // Half of the JFrame's height
-
-            // Draw the first BufferedImage at the specified position (x, y) with resizing
-            g.drawImage(image1, 0, 15, width1, height1, this);
-
-            // Draw the second BufferedImage at a different position with resizing
-            g.drawImage(image2, frameWidth / 2, 15, width2, height2, this);
+            g.drawImage(image1, 0, 15, frameWidth / 2, frameHeight, this);
+            g.drawImage(image2, frameWidth / 2, 15, frameWidth / 2, frameHeight, this);
         }
     }
 }

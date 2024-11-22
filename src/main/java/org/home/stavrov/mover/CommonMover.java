@@ -9,9 +9,9 @@ public abstract class CommonMover {
             executeMoverStep();
             Thread.sleep(DELAY);
         } catch (InterruptedException ex) {
-            System.out.println("Stopped execution " + this.getClass().getName());
-        } catch (Exception ex) {
             System.out.println("InterruptedException " + this.getClass().getName());
+        } catch (Exception ex) {
+            System.out.println("Exception " + this.getClass().getName());
         }
     }
 
