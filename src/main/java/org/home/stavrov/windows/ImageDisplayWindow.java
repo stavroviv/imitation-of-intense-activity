@@ -11,10 +11,9 @@ public class ImageDisplayWindow extends JFrame {
 
     public ImageDisplayWindow() {
         setTitle("Screenshot difference");
-        setSize(800, 600);
-
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS)); // Vertical alignment
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
         scrollPane = new JScrollPane(mainPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -22,8 +21,8 @@ public class ImageDisplayWindow extends JFrame {
         add(scrollPane);
     }
 
-    public void addImages(BufferedImage image1, BufferedImage image2, double similarity) {
-        mainPanel.add(new ImagePanel(image1, image2, similarity));
+    public void addImages(BufferedImage image1, BufferedImage image2, String difference) {
+        mainPanel.add(new ImagePanel(image1, image2, difference));
         SwingUtilities.invokeLater(() -> {
             mainPanel.revalidate();
             mainPanel.repaint();
@@ -37,18 +36,17 @@ public class ImageDisplayWindow extends JFrame {
         private final BufferedImage image1;
         private final BufferedImage image2;
 
-        public ImagePanel(BufferedImage image1, BufferedImage image2, double similarity) {
+        public ImagePanel(BufferedImage image1, BufferedImage image2, String difference) {
             this.image1 = image1;
             this.image2 = image2;
-            // Set the layout manager
             setLayout(new BorderLayout());
 
             // Create and add the JTextArea at the top
-            JTextArea textArea = new JTextArea("Time: " + LocalDateTime.now() + " similarity: " +  similarity);
-            textArea.setEditable(false); // Make it read-only
-            add(textArea, BorderLayout.NORTH); // Add at the top
+            JTextArea textArea = new JTextArea("Time: " + LocalDateTime.now() + " " + difference);
+            textArea.setEditable(false);
+            add(textArea, BorderLayout.NORTH);
 
-            setPreferredSize(new Dimension(600, 650)); // Ensure a fixed height for each panel
+            setPreferredSize(new Dimension(600, 650));
         }
 
         @Override

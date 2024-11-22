@@ -13,6 +13,7 @@ import java.util.Map;
 public class ScreenshotChecker extends CommonMover {
 
     private static final String HITS_PATTERN = "\\b\\d{1,3}(,\\d{3})* hits\\b";
+    public static final String LOGS_BROWSER_PAGE = "Prod D7MVS logs";
 
     private final User32 user32 = User32.INSTANCE;
     private static String prev;
@@ -36,16 +37,16 @@ public class ScreenshotChecker extends CommonMover {
     @Override
     protected void executeMoverStep() throws Exception {
         Map<WinDef.HWND, WindowInfo> teams =
-                WindowUtils.getOpenWindowsByFilter(name -> name.contains("Prod D7MVS logs"));
+                WindowUtils.getOpenWindowsByFilter(name -> name.contains(LOGS_BROWSER_PAGE));
         if (teams.isEmpty()) {
             System.out.println("Logs window not found");
             return;
         }
         currImage = captureWindow(teams.keySet().iterator().next());
-        curr = ImageUtils.parseImage(currImage, HITS_PATTERN);
+        curr = ImageParsingUtils.parseImage(currImage, HITS_PATTERN);
 
-        if (prev != null && !curr.equals(prev)) {
-            imageDisplayWindow.addImages(prevImage, currImage, 0);
+        if (prev != null && !curr.equals(prev) && !prev.isEmpty() && !curr.isEmpty()) {
+            imageDisplayWindow.addImages(prevImage, currImage, "Prev value: " + prev + " curr value: " + curr);
             imageDisplayWindow.setVisible(true);
             SoundUtils.playSound();
         }

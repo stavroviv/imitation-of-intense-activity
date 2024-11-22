@@ -10,18 +10,22 @@ import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ImageUtils {
+public class ImageParsingUtils {
+    private static ITesseract tesseract;
 
-    private ImageUtils() {
-    }
-
-    public static String parseImage(BufferedImage bufferedImage, String patternString) throws TesseractException {
-        ITesseract tesseract = new Tesseract();
+    static {
+        tesseract = new Tesseract();
         File tessDataFolder = LoadLibs.extractTessResources("tessdata");
         tesseract.setDatapath(tessDataFolder.getAbsolutePath());
         tesseract.setLanguage("eng");
+    }
+
+    private ImageParsingUtils() {
+    }
+
+    public static String parseImage(BufferedImage bufferedImage, String pattern) throws TesseractException {
         String parsedImage = tesseract.doOCR(bufferedImage);
-        return findAndPrintMatches(parsedImage, patternString);
+        return findAndPrintMatches(parsedImage, pattern);
     }
 
     private static String findAndPrintMatches(String input, String patternString) {
