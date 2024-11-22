@@ -1,16 +1,14 @@
 package org.home.stavrov.mover;
 
 import org.home.stavrov.utils.MouseUtils;
+import org.home.stavrov.windows.MainWindow;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class MouseMover extends CommonMover {
-    private final JButton moveButton;
     private final Robot robot;
 
-    public MouseMover(JButton moveButton) {
-        this.moveButton = moveButton;
+    public MouseMover() {
         try {
             this.robot = new Robot();
         } catch (Exception e) {
@@ -20,6 +18,7 @@ public class MouseMover extends CommonMover {
 
     @Override
     protected void executeMoverStep() {
+        var moveButton = MainWindow.getExecutionButton();
         MouseUtils.moveMouseToBorderAndReturnAfterAction(() -> {
             for (int i = 0; i < 5; i++) {
                 var buttonLocation = moveButton.getLocationOnScreen();
