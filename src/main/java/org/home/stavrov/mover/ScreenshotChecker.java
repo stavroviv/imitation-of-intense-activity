@@ -3,22 +3,20 @@ package org.home.stavrov.mover;
 import com.sun.jna.platform.win32.GDI32;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
-import org.home.stavrov.utils.MouseUtils;
-import org.home.stavrov.utils.SoundUtils;
-import org.home.stavrov.utils.WindowInfo;
-import org.home.stavrov.utils.WindowUtils;
+import org.home.stavrov.utils.*;
 import org.home.stavrov.windows.ImageDisplayWindow;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 import java.util.Map;
 
 public class ScreenshotChecker extends CommonMover {
 
+    private static final String HITS_PATTERN = "\\b\\d{1,3}(,\\d{3})* hits\\b";
+
     private final User32 user32 = User32.INSTANCE;
-    private static int[] prev;
-    private static int[] curr;
+    private static String prev;
+    private static String curr;
     private final Robot robot;
     private static BufferedImage prevImage;
     private static BufferedImage currImage;
@@ -44,31 +42,15 @@ public class ScreenshotChecker extends CommonMover {
             return;
         }
         currImage = captureWindow(teams.keySet().iterator().next());
-        curr = calculateHistogram(currImage);
+        curr = ImageUtils.parseImage(currImage, HITS_PATTERN);
 
-        if (prev != null) {
-            double similarity = calculateSimilarity(curr, prev);
-            System.out.println(similarity);
-            if (similarity < 0.94 && similarity > 0.5) {
-                imageDisplayWindow.addImages(prevImage, currImage, similarity);
-                imageDisplayWindow.setVisible(true);
-                SoundUtils.playSound();
-            }
+        if (prev != null && !curr.equals(prev)) {
+            imageDisplayWindow.addImages(prevImage, currImage, 0);
+            imageDisplayWindow.setVisible(true);
+            SoundUtils.playSound();
         }
         prev = curr;
         prevImage = currImage;
-    }
-
-    private static double calculateSimilarity(int[] hist1, int[] hist2) {
-        double sum = 0;
-        double sum1 = Arrays.stream(hist1).sum();
-        double sum2 = Arrays.stream(hist2).sum();
-        for (int i = 0; i < hist1.length; i++) {
-            double norm1 = hist1[i] / sum1;
-            double norm2 = hist2[i] / sum2;
-            sum += Math.min(norm1, norm2); // Intersection of histograms
-        }
-        return sum; // Value between 0 (no similarity) and 1 (identical)
     }
 
     private BufferedImage captureWindow(WinDef.HWND hwnd) throws Exception {
@@ -103,17 +85,5 @@ public class ScreenshotChecker extends CommonMover {
         int dpiX = GDI32.INSTANCE.GetDeviceCaps(hdc, 88);  // Horizontal DPI
         User32.INSTANCE.ReleaseDC(null, hdc); // Release the device context
         return dpiX;
-    }
-
-    private static int[] calculateHistogram(BufferedImage image) {
-        int[] histogram = new int[256]; // Grayscale histogram
-        for (int y = 0; y < image.getHeight(); y++) {
-            for (int x = 0; x < image.getWidth(); x++) {
-                int rgb = image.getRGB(x, y);
-                int gray = ((rgb >> 16 & 0xff) + (rgb >> 8 & 0xff) + (rgb & 0xff)) / 3; // Average RGB
-                histogram[gray]++;
-            }
-        }
-        return histogram;
     }
 }

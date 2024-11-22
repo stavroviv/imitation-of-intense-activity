@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ImitationOfIntenseActivity {
-    public static final int DELAY = 15000;
+    public static final int DELAY = 2000;
     public static final String MAIN_WINDOW_HEADER = "Imitation Of Intense Activity";
 
     private static boolean isRunning;
@@ -34,8 +34,8 @@ public class ImitationOfIntenseActivity {
                 isRunning = true;
                 moveButton.setText("Stop");
                 CommonMover[] movers = {
-                        new MouseMover(moveButton),
-                        new WindowSwitcher(),
+//                        new MouseMover(moveButton),
+//                        new WindowSwitcher(),
                         new ScreenshotChecker()
                 };
                 startExecution(movers);
