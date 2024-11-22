@@ -9,11 +9,11 @@ import org.home.stavrov.windows.ImageDisplayWindow;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Map;
+import java.util.Objects;
 
 public class ScreenshotChecker extends CommonMover {
 
     private static final String HITS_PATTERN = "\\b\\d{1,3}(,\\d{3})* hits\\b";
-    public static final String LOGS_BROWSER_PAGE = "Prod D7MVS logs";
 
     private final User32 user32 = User32.INSTANCE;
     private static String prev;
@@ -22,7 +22,8 @@ public class ScreenshotChecker extends CommonMover {
     private static BufferedImage prevImage;
     private static BufferedImage currImage;
 
-    ImageDisplayWindow imageDisplayWindow;
+    private ImageDisplayWindow imageDisplayWindow;
+    private String windowToFollowId;
 
     public ScreenshotChecker() {
         super();
@@ -34,15 +35,20 @@ public class ScreenshotChecker extends CommonMover {
         }
     }
 
+    public void init(String windowToFollowId) {
+        this.windowToFollowId = windowToFollowId;
+    }
+
     @Override
     protected void executeMoverStep() throws Exception {
-        Map<WinDef.HWND, WindowInfo> teams =
-                WindowUtils.getOpenWindowsByFilter(name -> name.contains(LOGS_BROWSER_PAGE));
-        if (teams.isEmpty()) {
-            System.out.println("Logs window not found");
+        var openWindows = WindowUtils.getOpenWindows();
+        WindowInfo windowInfo = openWindows.get(windowToFollowId);
+        if (Objects.isNull(windowInfo)) {
+            System.out.println("window not found");
             return;
         }
-        currImage = captureWindow(teams.keySet().iterator().next());
+
+        currImage = captureWindow(windowInfo.getId());
         curr = ImageParsingUtils.parseImage(currImage, HITS_PATTERN);
 
         if (prev != null && !curr.equals(prev) && !prev.isEmpty() && !curr.isEmpty()) {

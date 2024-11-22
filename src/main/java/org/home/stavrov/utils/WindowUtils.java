@@ -22,16 +22,16 @@ public class WindowUtils {
     private WindowUtils() {
     }
 
-    public static Map<WinDef.HWND, WindowInfo> getOpenWindows() {
+    public static Map<String, WindowInfo> getOpenWindows() {
         return getOpenWindows(Collections.emptyList());
     }
 
-    public static Map<WinDef.HWND, WindowInfo> getOpenWindows(List<String> excludeWin) {
+    public static Map<String, WindowInfo> getOpenWindows(List<String> excludeWin) {
         return getOpenWindowsByFilter(windowName -> !excludeWin.contains(windowName));
     }
 
-    public static Map<WinDef.HWND, WindowInfo> getOpenWindowsByFilter(Predicate<String> filter) {
-        Map<WinDef.HWND, WindowInfo> openedWindows = new HashMap<>();
+    public static Map<String, WindowInfo> getOpenWindowsByFilter(Predicate<String> filter) {
+        Map<String, WindowInfo> openedWindows = new HashMap<>();
         user32.EnumWindows((hwnd, pointer) -> {
             if (user32.IsWindowVisible(hwnd) && user32.GetWindowTextLength(hwnd) > 0) {
                 var windowText = new char[512];
@@ -40,7 +40,8 @@ public class WindowUtils {
                 if (filter.test(windowName)) {
                     WindowInfo value = new WindowInfo();
                     value.setName(windowName);
-                    openedWindows.put(hwnd, value);
+                    value.setId(hwnd);
+                    openedWindows.put(hwnd.toString(), value);
                 }
 //                System.out.println("Window title: " + windowName);
             }

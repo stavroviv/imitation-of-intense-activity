@@ -4,7 +4,7 @@ import org.home.stavrov.windows.MainWindow;
 
 public class ImitationOfIntenseActivity {
 
-    public static final int DELAY = 15000;
+    public static final int DELAY = 2000;
 
     public static void main(String[] args) {
         MainWindow window = new MainWindow();

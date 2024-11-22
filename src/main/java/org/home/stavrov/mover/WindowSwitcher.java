@@ -2,6 +2,7 @@ package org.home.stavrov.mover;
 
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
+import org.home.stavrov.utils.WindowInfo;
 import org.home.stavrov.utils.WindowUtils;
 
 import java.util.ArrayList;
@@ -18,7 +19,11 @@ public class WindowSwitcher extends CommonMover {
     @Override
     protected void executeMoverStep() throws Exception {
         if (windowList.isEmpty()) {
-            windowList.addAll(WindowUtils.getOpenWindows(EXCLUDE_WIN).keySet());
+            List<WinDef.HWND> list = WindowUtils.getOpenWindows(EXCLUDE_WIN)
+                    .values().stream()
+                    .map(WindowInfo::getId)
+                    .toList();
+            windowList.addAll(list);
         }
         if (windowList.isEmpty()) {
             System.out.println("No windows found.");
