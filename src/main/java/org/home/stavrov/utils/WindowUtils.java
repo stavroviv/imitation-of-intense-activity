@@ -38,7 +38,7 @@ public class WindowUtils {
                 user32.GetWindowText(hwnd, windowText, 512);
                 var windowName = Native.toString(windowText).trim();
                 if (filter.test(windowName)) {
-                    WindowInfo value = new WindowInfo();
+                    var value = new WindowInfo();
                     value.setName(windowName);
                     value.setId(hwnd);
                     openedWindows.put(hwnd.toString(), value);

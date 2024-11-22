@@ -15,7 +15,7 @@ public class ImageParsingUtils {
 
     static {
         tesseract = new Tesseract();
-        File tessDataFolder = LoadLibs.extractTessResources("tessdata");
+        var tessDataFolder = LoadLibs.extractTessResources("tessdata");
         tesseract.setDatapath(tessDataFolder.getAbsolutePath());
         tesseract.setLanguage("eng");
     }
@@ -24,13 +24,13 @@ public class ImageParsingUtils {
     }
 
     public static String parseImage(BufferedImage bufferedImage, String pattern) throws TesseractException {
-        String parsedImage = tesseract.doOCR(bufferedImage);
+        var parsedImage = tesseract.doOCR(bufferedImage);
         return findAndPrintMatches(parsedImage, pattern);
     }
 
     private static String findAndPrintMatches(String input, String patternString) {
-        Pattern pattern = Pattern.compile(patternString);
-        Matcher matcher = pattern.matcher(input);
+        var pattern = Pattern.compile(patternString);
+        var matcher = pattern.matcher(input);
         return matcher.find() ? matcher.group() : "";
     }
 }

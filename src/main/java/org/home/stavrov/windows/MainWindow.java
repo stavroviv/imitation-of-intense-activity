@@ -32,7 +32,7 @@ public class MainWindow extends JFrame {
     }
 
     private  void processExecution() {
-        int selectedRow = openWindowsTable.getSelectedRow();
+        var selectedRow = openWindowsTable.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Select window to follow");
             return;
@@ -40,26 +40,26 @@ public class MainWindow extends JFrame {
         var id = (String) openWindowsTableModel.getValueAt(selectedRow, 1);
         ExecutionContext.setWindowToFollowId(id);
 
-        boolean isRunning = ExecutionCycle.process();
+        var isRunning = ExecutionCycle.process();
         executionButton.setText(isRunning ? "Stop" : "Start");
     }
 
     private void addTable() {
-        JTable table = createWindowsTable();
+        var table = createWindowsTable();
 
-        JPanel panel = new JPanel();
+        var panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        JPanel panelFlow = new JPanel();
+        var panelFlow = new JPanel();
         panelFlow.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        JButton button = new JButton("Refresh");
+        var button = new JButton("Refresh");
         button.addActionListener(e -> refreshWindowTable());
         panelFlow.add(button);
 
         panel.add(panelFlow, BorderLayout.NORTH);
 
-        JScrollPane scrollPane = new JScrollPane(table);
+        var scrollPane = new JScrollPane(table);
         panel.add(scrollPane, BorderLayout.CENTER);
 
         add(panel, BorderLayout.CENTER);
@@ -68,7 +68,7 @@ public class MainWindow extends JFrame {
     private void refreshWindowTable() {
         openWindowsTableModel.setRowCount(0);
         var openWindows = WindowUtils.getOpenWindows();
-        int number = 1;
+        var number = 1;
         for (var hwndWindowInfoEntry : openWindows.entrySet()) {
             var id = hwndWindowInfoEntry.getKey();
             var name = hwndWindowInfoEntry.getValue().getName();
@@ -82,7 +82,7 @@ public class MainWindow extends JFrame {
     }
 
     private JTable createWindowsTable() {
-        String[] columnNames = {"№", "id", "Window Name"};
+        var columnNames = new String[]{"№", "id", "Window Name"};
         openWindowsTableModel = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -97,7 +97,7 @@ public class MainWindow extends JFrame {
     }
 
     private static void setColumnWidth(JTable table) {
-        TableColumn column = table.getColumnModel().getColumn(0);
+        var column = table.getColumnModel().getColumn(0);
         column.setMaxWidth(30);
         column = table.getColumnModel().getColumn(1);
         column.setMaxWidth(100);

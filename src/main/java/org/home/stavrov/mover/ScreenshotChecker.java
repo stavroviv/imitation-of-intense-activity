@@ -37,7 +37,7 @@ public class ScreenshotChecker extends CommonMover {
     @Override
     protected void executeMoverStep() throws Exception {
         var openWindows = WindowUtils.getOpenWindows();
-        WindowInfo windowInfo = openWindows.get(ExecutionContext.getWindowToFollowId());
+        var windowInfo = openWindows.get(ExecutionContext.getWindowToFollowId());
         if (Objects.isNull(windowInfo)) {
             System.out.println("window not found");
             return;
@@ -57,34 +57,34 @@ public class ScreenshotChecker extends CommonMover {
 
     private BufferedImage captureWindow(WinDef.HWND hwnd) throws Exception {
         user32.ShowWindow(hwnd, User32.SW_RESTORE);
-        boolean b = user32.SetForegroundWindow(hwnd);
-        int i = 0;
+        var b = user32.SetForegroundWindow(hwnd);
+        var i = 0;
         while (!b && i < 5) {
             Thread.sleep(1000);
             b = user32.SetForegroundWindow(hwnd);
             i++;
         }
 
-        User32 user32 = User32.INSTANCE;
-        WinDef.RECT rect = new WinDef.RECT();
+        var user32 = User32.INSTANCE;
+        var rect = new WinDef.RECT();
         user32.GetWindowRect(hwnd, rect);
 
-        int dpiScalingFactor = getDPIScalingFactor();
-        int x = rect.left * 96 / dpiScalingFactor;
-        int y = rect.top * 96 / dpiScalingFactor;
-        int width = (rect.right - rect.left) * 96 / dpiScalingFactor;
-        int height = (rect.bottom - rect.top) * 96 / dpiScalingFactor;
+        var dpiScalingFactor = getDPIScalingFactor();
+        var x = rect.left * 96 / dpiScalingFactor;
+        var y = rect.top * 96 / dpiScalingFactor;
+        var width = (rect.right - rect.left) * 96 / dpiScalingFactor;
+        var height = (rect.bottom - rect.top) * 96 / dpiScalingFactor;
 
         // Create a Rectangle representing the client area to capture
-        Rectangle captureArea = new Rectangle(x, y, width, height);
+        var captureArea = new Rectangle(x, y, width, height);
 
         return MouseUtils
                 .moveMouseToBorderAndReturnAfterAction(() -> robot.createScreenCapture(captureArea));
     }
 
     private static int getDPIScalingFactor() {
-        WinDef.HDC hdc = User32.INSTANCE.GetDC(null);  // Get the device context for the screen
-        int dpiX = GDI32.INSTANCE.GetDeviceCaps(hdc, 88);  // Horizontal DPI
+        var hdc = User32.INSTANCE.GetDC(null);  // Get the device context for the screen
+        var dpiX = GDI32.INSTANCE.GetDeviceCaps(hdc, 88);  // Horizontal DPI
         User32.INSTANCE.ReleaseDC(null, hdc); // Release the device context
         return dpiX;
     }

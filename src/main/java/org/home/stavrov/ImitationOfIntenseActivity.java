@@ -7,7 +7,7 @@ public class ImitationOfIntenseActivity {
     public static final int DELAY = 2000;
 
     public static void main(String[] args) {
-        MainWindow window = new MainWindow();
+        var window = new MainWindow();
         window.setVisible(true);
     }
 }

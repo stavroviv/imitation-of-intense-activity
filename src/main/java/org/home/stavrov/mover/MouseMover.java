@@ -20,7 +20,7 @@ public class MouseMover extends CommonMover {
     protected void executeMoverStep() {
         var moveButton = MainWindow.getExecutionButton();
         MouseUtils.moveMouseToBorderAndReturnAfterAction(() -> {
-            for (int i = 0; i < 5; i++) {
+            for (var i = 0; i < 5; i++) {
                 var buttonLocation = moveButton.getLocationOnScreen();
                 var buttonSize = moveButton.getSize();
                 var x = buttonLocation.x + (int) (Math.random() * buttonSize.width);

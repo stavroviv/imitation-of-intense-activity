@@ -26,7 +26,7 @@ public class ImageDisplayWindow extends JFrame {
         SwingUtilities.invokeLater(() -> {
             mainPanel.revalidate();
             mainPanel.repaint();
-            JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+            var verticalScrollBar = scrollPane.getVerticalScrollBar();
             verticalScrollBar.setValue(verticalScrollBar.getMaximum());
         });
 
@@ -42,7 +42,7 @@ public class ImageDisplayWindow extends JFrame {
             setLayout(new BorderLayout());
 
             // Create and add the JTextArea at the top
-            JTextArea textArea = new JTextArea("Time: " + LocalDateTime.now() + " " + difference);
+            var textArea = new JTextArea("Time: " + LocalDateTime.now() + " " + difference);
             textArea.setEditable(false);
             add(textArea, BorderLayout.NORTH);
 
@@ -53,15 +53,15 @@ public class ImageDisplayWindow extends JFrame {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             // Get the current size of the JFrame (window)
-            int frameWidth = getWidth();
-            int frameHeight = getHeight();
+            var frameWidth = getWidth();
+            var frameHeight = getHeight();
 
             // Calculate half of the width and height for the images
-            int width1 = frameWidth / 2;  // Half of the JFrame's width
-            int height1 = frameHeight * 80 / 100; // Half of the JFrame's height
+            var width1 = frameWidth / 2;  // Half of the JFrame's width
+            var height1 = frameHeight * 80 / 100; // Half of the JFrame's height
 
-            int width2 = frameWidth / 2;  // Half of the JFrame's width
-            int height2 = frameHeight * 80 / 100; // Half of the JFrame's height
+            var width2 = frameWidth / 2;  // Half of the JFrame's width
+            var height2 = frameHeight * 80 / 100; // Half of the JFrame's height
 
             // Draw the first BufferedImage at the specified position (x, y) with resizing
             g.drawImage(image1, 0, 15, width1, height1, this);

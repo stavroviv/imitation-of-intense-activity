@@ -19,7 +19,7 @@ public class WindowSwitcher extends CommonMover {
     @Override
     protected void executeMoverStep() throws Exception {
         if (windowList.isEmpty()) {
-            List<WinDef.HWND> list = WindowUtils.getOpenWindows(EXCLUDE_WIN)
+            var list = WindowUtils.getOpenWindows(EXCLUDE_WIN)
                     .values().stream()
                     .map(WindowInfo::getId)
                     .toList();

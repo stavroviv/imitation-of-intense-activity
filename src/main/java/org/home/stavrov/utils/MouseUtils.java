@@ -27,16 +27,16 @@ public class MouseUtils {
         } catch (AWTException e) {
             throw new RuntimeException(e);
         }
-        Point location = MouseInfo.getPointerInfo().getLocation();
-        int xMousePrev = location.x;
-        int yMousePrev = location.y;
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        int screenWidth = (int) screenSize.getWidth();
-        int screenHeight = (int) screenSize.getHeight();
+        var location = MouseInfo.getPointerInfo().getLocation();
+        var xMousePrev = location.x;
+        var yMousePrev = location.y;
+        var screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        var screenWidth = (int) screenSize.getWidth();
+        var screenHeight = (int) screenSize.getHeight();
 
         robot.mouseMove(screenWidth, screenHeight);
 
-        T result = action.get();
+        var result = action.get();
 
         robot.mouseMove(xMousePrev, yMousePrev);
 

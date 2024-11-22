@@ -44,13 +44,13 @@ public class SoundUtils {
 
     private static void playChordProgression() throws LineUnavailableException {
         // Set up the audio format
-        AudioFormat format = new AudioFormat(SAMPLE_RATE, 8, 1, true, false);
-        SourceDataLine line = AudioSystem.getSourceDataLine(format);
+        var format = new AudioFormat(SAMPLE_RATE, 8, 1, true, false);
+        var line = AudioSystem.getSourceDataLine(format);
         line.open(format);
         line.start();
 
         // Define the chords (in terms of frequencies)
-        double[][] chordProgression = {
+        var chordProgression = new double[][]{
                 {NOTES[1], NOTES[3], NOTES[5]},  // D minor (D, F, A)
                 {NOTES[4], NOTES[6], NOTES[1]},  // G minor (G, B♭, D)
                 {NOTES[5], NOTES[2], NOTES[7], NOTES[1]}, // A7 (A, C#, E, G)
@@ -59,7 +59,7 @@ public class SoundUtils {
         };
 
         // Generate and play the chord progression
-        for (double[] chord : chordProgression) {
+        for (var chord : chordProgression) {
             playChordNotes(line, chord, CHORD_DURATION, SAMPLE_RATE, AMPLITUDE);
             try {
                 Thread.sleep(REST_DURATION); // Pause between chords
@@ -73,14 +73,14 @@ public class SoundUtils {
     }
 
     private static void playChordNotes(SourceDataLine line, double[] frequencies, int duration, float sampleRate, int amplitude) {
-        int numSamples = (int) (duration * sampleRate / 1000);
-        byte[] buffer = new byte[numSamples];
+        var numSamples = (int) (duration * sampleRate / 1000);
+        var buffer = new byte[numSamples];
 
         // Combine the sine waves of each frequency to form the chord
-        for (int i = 0; i < numSamples; i++) {
+        for (var i = 0; i < numSamples; i++) {
             double sum = 0;
-            for (double frequency : frequencies) {
-                double angle = 2.0 * Math.PI * i / (sampleRate / frequency);
+            for (var frequency : frequencies) {
+                var angle = 2.0 * Math.PI * i / (sampleRate / frequency);
                 sum += Math.sin(angle);
             }
             buffer[i] = (byte) ((sum / frequencies.length) * amplitude); // Average the frequencies

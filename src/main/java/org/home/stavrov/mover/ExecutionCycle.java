@@ -23,7 +23,7 @@ public class ExecutionCycle {
         };
         executionThread = new Thread(() -> {
             while (isRunning) {
-                for (CommonMover mover : movers) {
+                for (var mover : movers) {
                     if (isRunning) {
                         mover.run();
                     }
