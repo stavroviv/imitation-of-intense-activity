@@ -60,7 +60,7 @@ public class WindowUtils {
 
         var messageLabel = new JLabel(message, SwingConstants.CENTER);
         messageLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        messageLabel.setBackground(new Color(155, 186, 236)); // Light yellow background
+        messageLabel.setBackground(new Color(229, 237, 244));
         messageLabel.setOpaque(true);
 
         balloon.add(messageLabel, BorderLayout.CENTER);
@@ -74,11 +74,25 @@ public class WindowUtils {
         balloon.setAlwaysOnTop(true);
         balloon.setVisible(true);
 
-        var timer = new Timer(5000, e -> {
-            balloon.setVisible(false);
-            balloon.dispose();
+        var fadeOutTimer = new Timer(50, null);
+        fadeOutTimer.addActionListener(new ActionListener() {
+            private float opacity = 1.0f;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                opacity -= 0.05f;
+                if (opacity <= 0.0f) {
+                    fadeOutTimer.stop();
+                    balloon.setVisible(false);
+                    balloon.dispose();
+                } else {
+                    balloon.setOpacity(opacity);
+                }
+            }
         });
-        timer.setRepeats(false);
-        timer.start();
+
+        var startFadeTimer = new Timer(3000, e -> fadeOutTimer.start());
+        startFadeTimer.setRepeats(false); // Run only once
+        startFadeTimer.start();
     }
 }

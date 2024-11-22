@@ -51,8 +51,10 @@ public class ScreenshotChecker extends CommonMover {
             imageDisplayWindow.setVisible(true);
             SoundUtils.playSound();
         }
-        prev = curr;
-        prevImage = currImage;
+        if (curr != null && !curr.isEmpty()) {
+            prev = curr;
+            prevImage = currImage;
+        }
     }
 
     private BufferedImage captureWindow(WinDef.HWND hwnd) throws Exception {
