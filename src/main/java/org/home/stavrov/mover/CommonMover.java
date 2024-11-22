@@ -7,7 +7,7 @@ import static org.home.stavrov.ImitationOfIntenseActivity.DELAY;
 public abstract class CommonMover {
 
     public void run() {
-        WindowUtils.showBalloonNotification("Now is executed: " + this.getClass().getSimpleName());
+        WindowUtils.showBalloonNotification("Now is executing: " + this.getClass().getSimpleName());
         try {
             executeMoverStep();
         } catch (Exception ex) {
