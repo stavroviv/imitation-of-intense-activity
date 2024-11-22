@@ -3,17 +3,17 @@ package org.home.stavrov.mover;
 import com.sun.jna.platform.win32.GDI32;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
-import org.home.stavrov.utils.*;
+import org.home.stavrov.utils.ImageParsingUtils;
+import org.home.stavrov.utils.MouseUtils;
+import org.home.stavrov.utils.SoundUtils;
+import org.home.stavrov.utils.WindowUtils;
 import org.home.stavrov.windows.ImageDisplayWindow;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Map;
 import java.util.Objects;
 
 public class ScreenshotChecker extends CommonMover {
-
-    private static final String HITS_PATTERN = "\\b\\d{1,3}(,\\d{3})* hits\\b";
 
     private final User32 user32 = User32.INSTANCE;
     private static String prev;
@@ -44,7 +44,7 @@ public class ScreenshotChecker extends CommonMover {
         }
 
         currImage = captureWindow(windowInfo.getId());
-        curr = ImageParsingUtils.parseImage(currImage, HITS_PATTERN);
+        curr = ImageParsingUtils.parseImage(currImage, ExecutionContext.getPatternToFollow());
 
         if (prev != null && !curr.equals(prev) && !prev.isEmpty() && !curr.isEmpty()) {
             imageDisplayWindow.addImages(prevImage, currImage, "Prev value: " + prev + " curr value: " + curr);

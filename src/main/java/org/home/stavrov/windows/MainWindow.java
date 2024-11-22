@@ -12,6 +12,7 @@ public class MainWindow extends JFrame {
     public static final String MAIN_WINDOW_HEADER = "Imitation Of Intense Activity";
     private static JButton executionButton;
     private JButton refreshButton;
+    private JTextField windowFollowPattern;
     private DefaultTableModel openWindowsTableModel;
     private JTable openWindowsTable;
 
@@ -36,7 +37,7 @@ public class MainWindow extends JFrame {
         }
         var id = (String) openWindowsTableModel.getValueAt(selectedRow, 1);
         ExecutionContext.setWindowToFollowId(id);
-
+        ExecutionContext.setPatternToFollow(windowFollowPattern.getText());
         var isRunning = ExecutionCycle.process();
         executionButton.setText(isRunning ? "Stop" : "Start");
         disableWindowTable(isRunning);
@@ -45,6 +46,7 @@ public class MainWindow extends JFrame {
     private void disableWindowTable(boolean isRunning) {
         openWindowsTable.setEnabled(!isRunning);
         refreshButton.setEnabled(!isRunning);
+        windowFollowPattern.setEnabled(!isRunning);
     }
 
     private void addTable() {
@@ -59,6 +61,10 @@ public class MainWindow extends JFrame {
         refreshButton = new JButton("Refresh");
         refreshButton.addActionListener(e -> refreshWindowTable());
         panelFlow.add(refreshButton);
+
+        windowFollowPattern = new JTextField(50);
+        windowFollowPattern.setText("\\b\\d{1,3}(,\\d{3})* hits\\b");
+        panelFlow.add(windowFollowPattern);
 
         panel.add(panelFlow, BorderLayout.NORTH);
 

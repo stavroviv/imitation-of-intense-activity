@@ -7,11 +7,13 @@ public abstract class CommonMover {
     public void run() {
         try {
             executeMoverStep();
+        } catch (Exception ex) {
+            System.out.println("Exception " + this.getClass().getName());
+        }
+        try {
             Thread.sleep(DELAY);
         } catch (InterruptedException ex) {
             System.out.println("InterruptedException " + this.getClass().getName());
-        } catch (Exception ex) {
-            System.out.println("Exception " + this.getClass().getName());
         }
     }
 
