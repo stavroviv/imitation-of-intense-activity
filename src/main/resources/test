@@ -1,0 +1,23 @@
+¥ KK Discover rod D7MVS logs- Kei} Mall-la Stavrov EXT -Outloo’ x | + - oo
+€ © @ 2% _kibana-openshift-logging.apps.ccp.cs.prod.gcp.dbgcloud io/app/kibana?security tenant=private#/discover/9c557be0-2564-1 1ef-8a70-b962e2f445ba?_g=(refreshinterval(pausettvalue0).. wy fF  &
+CO FRA COLUX CO DEV G PROD CY Borse EM Outlook C2 confluence CO trash CD issues G Accounts-cyberark (2 confluence CO Testint € MVSissues € MVSSIRS 4 D7 MVS Board © AlBookmarks
+Prod D7MVS logs‘D 0 hits New Save Open Share Inspect CAuto-refresh € @Today >
+@ discover
+[ineStageMicisliectld= ts Wievehscrtbc" WK kubehnctescoftai eh.nsthe: ip Slip aptly NOT message: "No mapping for RELA: NONREF,value.desetializer =, CAND//EXP" MOET Actions >
+$G__ Dashboard app*
+= Selected field
+B_ Timelion selected fields © Noresults match your search criteria
+ft kubernetes.container
+a Expand your time range
+§@} Management t message
+RS ° (One or more of the indices you're looking at contains a date field. Your query may not match anything in the current time range, or there may not be any
+Tenants data at all in the currently selected time range. You can try opening the time picker and changing the time range to one which contains data.
+OP bees: Refine your query
+The search bar at the top uses Elasticsearch’s support for Lucene Query String syntax. Here are some examples of how you can search for web server logs
+that have been parsed into a few fields.
+Find requests that contain the number 200, in any field 200
+Find 200 in the status field status:200
+Find all status codes between 400-499 status:[408 TO 499]
+Find status codes 400-499 with the extension php status:[408 TO 499] AND extension: PHP
+Find status codes 400-499 with the extension php or html status:[4@@ TO 499] AND (extension:php OR extension:html)
+€ Collapse
