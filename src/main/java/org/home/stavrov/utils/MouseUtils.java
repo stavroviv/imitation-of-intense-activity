@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 public class MouseUtils {
 
     private MouseUtils() {
-
+        //
     }
 
     public static void moveMouseToBorderAndReturnAfterAction(VoidAction action) {
