@@ -46,17 +46,21 @@ jobs:
             exit 1
         fi
 
-        RELEASE_VERSION=$(echo $BRANCH_NAME | sed 's/^release\///')
+        RELEASE_VERSION=$(echo "$BRANCH_NAME" | sed 's/^release\///')
         echo "release version: $RELEASE_VERSION"
 
-        TAGS=$(git tag -l 'v$RELEASE_VERSION.*')
-        LATEST_TAG=$(echo "$TAGS" | sed -E 's/v$RELEASE_VERSION\.([0-9]+)/\1/' | sort -n | tail -n 1)
+        TAGS=$(git tag -l "v$RELEASE_VERSION.*")
+        echo "Found tags: $TAGS"
+        
+        LATEST_TAG=$(echo "$TAGS" | sed -E "s/v$RELEASE_VERSION\.([0-9]+)/\1/" | sort -n | tail -n 1)
+        LATEST_TAG=${LATEST_TAG:-0} 
+        
         NEXT_TAG=$((LATEST_TAG + 1))
         NEXT_TAG="v$RELEASE_VERSION.$NEXT_TAG"
         echo "Next tag: $NEXT_TAG"
            
-        git tag $NEXT_TAG
-        git push origin $NEXT_TAG
+        git tag "$NEXT_TAG"
+        git push origin "$NEXT_TAG"
     - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
