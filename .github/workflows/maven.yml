@@ -43,8 +43,13 @@ jobs:
         echo "Current branch is ${{ github.ref_name }}"
         echo "Current branch is ${{ github.event.pull_request.base.ref }}"
         git --version 
-        BASE_COMMIT=$(git merge-base ${{ github.event.pull_request.base.ref }} ${{ github.ref_name }})
-        echo "Base commit: $BASE_COMMIT"
+   
+        tags=$(git tag -l 'v1.4.*')
+        latest_tag=$(echo "$tags" | sed -E 's/v1.4\.([0-9]+)/\1/' | sort -n | tail -n 1)
+        next_tag=$((latest_tag + 1))
+        new_tag="v1.4.$next_tag"
+        echo "Next tag: $new_tag"
+        
     - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
