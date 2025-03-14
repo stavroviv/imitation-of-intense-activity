@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       next_tag: ${{ steps.generate_next_tag.outputs.NEXT_TAG }}
+      test_out: ${{ steps.generate_next_tag.outputs.TEST_OUT }}
     steps:
       - uses: actions/checkout@v4
         with:
