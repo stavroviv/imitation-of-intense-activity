@@ -70,3 +70,11 @@ jobs:
           NEXT_TAG=${{ needs.build.outputs.next_tag }}
           git tag "$NEXT_TAG"
           git push origin "$NEXT_TAG"
+  build-manual:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
