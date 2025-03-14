@@ -13,7 +13,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'workflow_dispatch' }}
     outputs:
       next_tag: ${{ steps.generate_next_tag.outputs.NEXT_TAG }}
     steps:
@@ -23,6 +22,11 @@ jobs:
       - name: Get all commits between current branch and main
         id: generate_next_tag
         run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "This job was triggered manually!"
+          else
+            echo "This job was not triggered manually."
+          fi
           echo "Current branch is ${{ github.ref_name }}"
           
           BRANCH_NAME=${GITHUB_REF_NAME}
