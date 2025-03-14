@@ -51,7 +51,9 @@ jobs:
         NEXT_TAG=$((LATEST_TAG + 1))
         NEXT_TAG="v$RELEASE_VERSION.$NEXT_TAG"
         echo "Next tag: $NEXT_TAG"
-        
+           
+        git tag $NEXT_TAG
+        git push origin $NEXT_TAG
     - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
