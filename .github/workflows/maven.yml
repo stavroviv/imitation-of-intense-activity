@@ -6,19 +6,7 @@ on:
   pull_request:
     branches: [ "master" ]
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Select environment'
-        required: true
-        default: 'staging'
-        type: choice
-        options:
-          - staging
-          - production
-      version:
-        description: 'App version'
-        required: false
-        type: string
+
 permissions:
   contents: write  # Разрешение на пуш тэгов
 
