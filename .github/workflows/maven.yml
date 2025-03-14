@@ -34,6 +34,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Get all commits between current branch and main
+      run: |
+        # Получаем хеш точки разветвления между текущей веткой и main
+        BASE_COMMIT=$(git merge-base main HEAD)
+        echo "Base commit: $BASE_COMMIT"
+        # Получаем все коммиты между текущей веткой и точкой разветвления
+        git log $BASE_COMMIT..HEAD --oneline
     - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
