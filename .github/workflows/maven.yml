@@ -45,6 +45,8 @@ jobs:
         git --version 
         
         BRANCH_NAME = ${GITHUB_REF_NAME}
+        echo "gti branch name: $GITHUB_REF_NAME"
+        echo "gti branch name: ${GITHUB_REF_NAME}"
         echo "branch name: $BRANCH_NAME"
         clean_branch_name=$(echo $BRANCH_NAME | sed 's/^release\///')
         echo "Cleaned branch name: $clean_branch_name"
