@@ -43,9 +43,10 @@ jobs:
         echo "Current branch is ${{ github.ref_name }}"
         echo "Current branch is ${{ github.event.pull_request.base.ref }}"
         git --version 
-
-        clean_branch_name=$(echo ${{ github.ref_name }} | sed 's/^release\///')
-
+        
+        BRANCH_NAME = ${GITHUB_REF_NAME}
+        echo "branch name: $BRANCH_NAME"
+        clean_branch_name=$(echo $BRANCH_NAME | sed 's/^release\///')
         echo "Cleaned branch name: $clean_branch_name"
 
         tags=$(git tag -l 'v1.4.*')
