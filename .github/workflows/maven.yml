@@ -44,7 +44,7 @@ jobs:
         echo "Current branch is ${{ github.event.pull_request.base.ref }}"
         git --version 
         
-        BRANCH_NAME = ${GITHUB_REF_NAME}
+        BRANCH_NAME=${GITHUB_REF_NAME}
         echo "gti branch name: $GITHUB_REF_NAME"
         echo "gti branch name: ${GITHUB_REF_NAME}"
         echo "branch name: $BRANCH_NAME"
