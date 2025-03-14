@@ -39,6 +39,7 @@ jobs:
     - name: Get all commits between current branch and main
       run: |
         echo "Current branch is ${{ github.ref }}"
+        
         echo "Current branch is ${{ github.ref_name }}"
         echo "Current branch is ${{ github.event.pull_request.base.ref }}"
         git --version 
