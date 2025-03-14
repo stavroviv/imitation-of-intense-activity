@@ -50,7 +50,7 @@ jobs:
         echo "release version: $RELEASE_VERSION"
 
         TAGS=$(git tag -l 'v$RELEASE_VERSION.*')
-        LATEST_TAG=$(echo "$TAGS" | sed -E 's/v1.4\.([0-9]+)/\1/' | sort -n | tail -n 1)
+        LATEST_TAG=$(echo "$TAGS" | sed -E 's/v$RELEASE_VERSION\.([0-9]+)/\1/' | sort -n | tail -n 1)
         NEXT_TAG=$((LATEST_TAG + 1))
         NEXT_TAG="v$RELEASE_VERSION.$NEXT_TAG"
         echo "Next tag: $NEXT_TAG"
