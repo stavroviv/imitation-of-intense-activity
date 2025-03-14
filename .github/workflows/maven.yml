@@ -37,7 +37,7 @@ jobs:
     - name: Get all commits between current branch and main
       run: |
         git --version 
-        BASE_COMMIT=$(git merge-base origin/master ${{ github.ref_name }})
+        BASE_COMMIT=$(git merge-base ${{ github.event.pull_request.base.ref }} ${{ github.ref_name }})
         echo "Base commit: $BASE_COMMIT"
     - name: Set up JDK 17
       uses: actions/setup-java@v4
