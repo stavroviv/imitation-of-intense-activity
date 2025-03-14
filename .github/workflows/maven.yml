@@ -34,8 +34,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     - name: Get all commits between current branch and main
       run: |
+        echo "Current branch is ${{ github.ref }}"
+        echo "Current branch is ${{ github.ref_name }}"
+        echo "Current branch is ${{ github.event.pull_request.base.ref }}"
         git --version 
         BASE_COMMIT=$(git merge-base ${{ github.event.pull_request.base.ref }} ${{ github.ref_name }})
         echo "Base commit: $BASE_COMMIT"
