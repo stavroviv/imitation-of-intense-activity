@@ -37,7 +37,7 @@ jobs:
     - name: Get all commits between current branch and main
       run: |
         # Получаем хеш точки разветвления между текущей веткой и main
-        BASE_COMMIT=$(git merge-base main HEAD)
+        BASE_COMMIT=$(git merge-base master HEAD)
         echo "Base commit: $BASE_COMMIT"
         # Получаем все коммиты между текущей веткой и точкой разветвления
         git log $BASE_COMMIT..HEAD --oneline
