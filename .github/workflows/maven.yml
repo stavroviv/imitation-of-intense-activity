@@ -38,10 +38,7 @@ jobs:
       run: |
         # Получаем хеш точки разветвления между текущей веткой и main
         git --version  # Печатаем версию Git для проверки
-        BASE_COMMIT=$(git merge-base master HEAD)
-        echo "Base commit: $BASE_COMMIT"
-        # Получаем все коммиты между текущей веткой и точкой разветвления
-        git log $BASE_COMMIT..HEAD --oneline
+        
     - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
