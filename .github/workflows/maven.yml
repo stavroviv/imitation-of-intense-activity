@@ -43,7 +43,8 @@ jobs:
         echo "Current branch is ${{ github.ref_name }}"
         echo "Current branch is ${{ github.event.pull_request.base.ref }}"
         git --version 
-   
+
+
         tags=$(git tag -l 'v1.4.*')
         latest_tag=$(echo "$tags" | sed -E 's/v1.4\.([0-9]+)/\1/' | sort -n | tail -n 1)
         next_tag=$((latest_tag + 1))
