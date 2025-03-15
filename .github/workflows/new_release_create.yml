@@ -7,6 +7,44 @@ permissions:
   contents: write  # Разрешение на пуш тэгов
 
 jobs:
+  calculate-tags:
+    runs-on: ubuntu-latest
+    outputs:
+      next_tag: ${{ steps.generate_next_tag.outputs.NEXT_TAG }}
+      test_out: ${{ steps.generate_next_tag.outputs.TEST_OUT }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Get all commits between current branch and main
+        id: generate_next_tag
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "Current branch is ${{ github.ref_name }}"
+
+            BRANCH_NAME=${GITHUB_REF_NAME}
+            if [[ "$BRANCH_NAME" != release/* ]]; then
+                echo "❌ Branch name does not contain 'release'. Exiting..."
+                exit 1
+            fi
+
+            RELEASE_VERSION=$(echo "$BRANCH_NAME" | sed 's/^release\///')
+            echo "release version: $RELEASE_VERSION"
+
+            TAGS=$(git tag -l "v$RELEASE_VERSION.*")
+            echo "Found tags: $TAGS"
+
+            LATEST_TAG=$(echo "$TAGS" | sed -E "s/v$RELEASE_VERSION\.([0-9]+)/\1/" | sort -n | tail -n 1)
+            LATEST_TAG=${LATEST_TAG:-0} 
+
+            NEXT_TAG=$((LATEST_TAG + 1))
+            NEXT_TAG="v$RELEASE_VERSION.$NEXT_TAG"
+            echo "Next tag: $NEXT_TAG"
+
+            echo "NEXT_TAG=$NEXT_TAG" >> $GITHUB_OUTPUT
+          fi
   release-build:
     name: Build and deploy release
     uses: ./.github/workflows/maven.yml
+    with:
+      release_tag:  ${{ needs.calculate-tags.outputs.next_tag }}
