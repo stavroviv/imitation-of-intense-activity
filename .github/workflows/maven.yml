@@ -69,21 +69,7 @@ jobs:
     #     java-version: '17'
     #     distribution: 'temurin'
     #     cache: maven
-  build-final:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Use tag from job1
-        run: |
-          echo "Current branch is ${{ github.ref_name }}"
-          
-          echo "Received tag: ${{ needs.build.outputs.next_tag }}"        
-          NEXT_TAG=${{ needs.build.outputs.next_tag }}
-          git tag "$NEXT_TAG"
-          git push origin "$NEXT_TAG"
+
   build-manual:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'workflow_dispatch' }}

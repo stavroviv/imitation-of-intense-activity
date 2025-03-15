@@ -49,3 +49,19 @@ jobs:
     needs: calculate-tags
     with:
       release_tag:  ${{ needs.calculate-tags.outputs.next_tag }}
+  build-final:
+    runs-on: ubuntu-latest
+    name: Push release tags to repo
+    needs: [release-build,calculate-tags]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Use tag from job1
+        run: |
+          echo "Current branch is ${{ github.ref_name }}"
+
+          echo "Received tag: ${{ needs.calculate-tags.outputs.next_tag }}"        
+          NEXT_TAG=${{ needs.calculate-tags.outputs.next_tag }}
+          git tag "$NEXT_TAG"
+          git push origin "$NEXT_TAG"
