@@ -7,5 +7,6 @@ permissions:
   contents: write  # Разрешение на пуш тэгов
 
 jobs:
-  call-build-workflow:
+  release-build:
+    name: Build and deploy release
     uses: ./.github/workflows/maven.yml
