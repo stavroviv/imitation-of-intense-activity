@@ -5,3 +5,7 @@ on:
 
 permissions:
   contents: write  # Разрешение на пуш тэгов
+
+jobs:
+  call-build-workflow:
+    uses: ./.github/workflows/maven.yml
