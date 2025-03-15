@@ -46,5 +46,6 @@ jobs:
   release-build:
     name: Build and deploy release
     uses: ./.github/workflows/maven.yml
+    needs: calculate-tags
     with:
       release_tag:  ${{ needs.calculate-tags.outputs.next_tag }}
