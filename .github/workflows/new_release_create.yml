@@ -1,0 +1,7 @@
+name: New build system
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write  # Разрешение на пуш тэгов
