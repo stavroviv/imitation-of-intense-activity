@@ -34,6 +34,7 @@ jobs:
         fetch-depth: 0
     - name: Get all commits between current branch and main
       run: |
+        echo "I AM 1.5"
         echo "Current branch is ${{ github.ref }}"
         
         echo "Current branch is ${{ github.ref_name }}"
