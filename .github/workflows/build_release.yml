@@ -34,9 +34,9 @@ jobs:
             exit 1;
           }
           echo "❌ ${{ github.sha }}"
-          git tag --contains ${{ github.sha }}
+      
           
-          TAG=$(git describe --tags --exact-match)
+          TAGS=$(git tag --points-at "${{ github.sha }}")
           if [ "$TAG" != "" ]; then
             echo "❌ The latest commit is already tagged with tag: $TAG. Exiting..."
             exit 1
