@@ -31,4 +31,5 @@ jobs:
         id: generate_next_tag
         run: |
           echo "execute build for ${{ inputs.releaseVersion }}"
+          sleep 30
 
