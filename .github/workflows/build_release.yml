@@ -34,8 +34,6 @@ jobs:
             echo "❌ Exiting..."
             exit 1;
           }
-          echo "❌ ${{ github.sha }}"
-          
           
           TAG=$(git describe --exact-match --tags "${{ github.sha }}" 2>/dev/null || echo "")
           echo "DEBUG: $TAG"
@@ -75,32 +73,28 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
+#      - name: Create Release
+#        id: create_release
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          tag_name: ${{ needs.getReleaseInformation.outputs.releaseTag }}
+#          release_name: ${{ needs.getReleaseInformation.outputs.releaseVersion }}
+#          body: |
+#            Changes in this Release
+#            - First Change
+#            - Second Change
+#          draft: false
+#          prerelease: false
+#
+#  release:
+      - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ needs.getReleaseInformation.outputs.releaseTag }}
-          release_name: ${{ needs.getReleaseInformation.outputs.releaseVersion }}
-          body: |
-            Changes in this Release
-            - First Change
-            - Second Change
-          draft: false
-          prerelease: false
-#    name: Push release tag to repository
-#    needs: [getReleaseInformation,buildRelease]
-#    steps:
-#      - uses: actions/checkout@v4
-#        with:
-#          fetch-depth: 0
-#      - name: Push release tag
-#        run: |
-#          echo "Current branch is ${{ github.ref_name }}"
-#
-#          RELEASE_TAG=${{ needs.getReleaseInformation.outputs.releaseTag }}
-#          echo "Received tag: $RELEASE_TAG"
-#
-#          git tag "$RELEASE_TAG"
-#          git push origin "$RELEASE_TAG"
+          tag: ${{ needs.getReleaseInformation.outputs.releaseTag }}
+        run: |
+          gh release create "$tag" \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
+              --generate-notes
