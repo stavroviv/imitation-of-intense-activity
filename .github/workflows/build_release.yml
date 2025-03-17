@@ -78,6 +78,5 @@ jobs:
           TAG: ${{ needs.getReleaseInformation.outputs.releaseTag }}
         run: |
           gh release create "$TAG" \
-              --repo="$GITHUB_REPOSITORY" \
-              --title="${TAG}" \
+              --title="${TAG#v}" \
               --generate-notes
