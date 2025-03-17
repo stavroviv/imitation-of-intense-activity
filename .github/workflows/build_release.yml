@@ -25,10 +25,11 @@ jobs:
         run: |
           BRANCH_NAME=${GITHUB_REF_NAME}
           echo "Current branch is $BRANCH_NAME"
-          if [[ "$BRANCH_NAME" != release/* ]]; then
-            echo "❌ Branch name does not contain 'release'. Exiting..."
-            exit 1
-          fi
+          echo "$BRANCH_NAME" | grep -Eq "^release/[0-9]+\.[0-9]+$" || { 
+            echo "❌ The branch name must be in the format release/number.number"
+            echo "❌ Exiting..."
+            exit 1;
+          }
           
           RELEASE_VERSION=$(echo "$BRANCH_NAME" | sed 's/^release\///')
           echo "Release version: $RELEASE_VERSION"
