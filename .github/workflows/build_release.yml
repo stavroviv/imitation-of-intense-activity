@@ -71,30 +71,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: [getReleaseInformation,buildRelease]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-#      - name: Create Release
-#        id: create_release
-#        uses: actions/create-release@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          tag_name: ${{ needs.getReleaseInformation.outputs.releaseTag }}
-#          release_name: ${{ needs.getReleaseInformation.outputs.releaseVersion }}
-#          body: |
-#            Changes in this Release
-#            - First Change
-#            - Second Change
-#          draft: false
-#          prerelease: false
-#
-#  release:
-      - name: Create release
+      - uses: actions/checkout@v4
+      - name: Create github release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ needs.getReleaseInformation.outputs.releaseTag }}
+          TAG: ${{ needs.getReleaseInformation.outputs.releaseTag }}
         run: |
-          gh release create "$tag" \
+          gh release create "$TAG" \
               --repo="$GITHUB_REPOSITORY" \
-              --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
+              --title="${GITHUB_REPOSITORY#*/} ${TAG#v}" \
               --generate-notes
