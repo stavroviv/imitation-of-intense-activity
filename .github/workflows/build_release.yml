@@ -73,32 +73,28 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ needs.getReleaseInformation.outputs.releaseTag }}
-          release_name: ${{ needs.getReleaseInformation.outputs.releaseVersion }}
-          body: |
-            Changes in this Release
-            - First Change
-            - Second Change
-          draft: false
-          prerelease: false
-
-#
-#  release:
-#    name: Release pushed tag
-#    runs-on: ubuntu-22.04
-#    steps:
-#      - name: Create release
+#      - name: Create Release
+#        id: create_release
+#        uses: actions/create-release@v1
 #        env:
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          tag: ${{ github.ref_name }}
-#        run: |
-#          gh release create "$tag" \
-#              --repo="$GITHUB_REPOSITORY" \
-#              --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
-#              --generate-notes
+#        with:
+#          tag_name: ${{ needs.getReleaseInformation.outputs.releaseTag }}
+#          release_name: ${{ needs.getReleaseInformation.outputs.releaseVersion }}
+#          body: |
+#            Changes in this Release
+#            - First Change
+#            - Second Change
+#          draft: false
+#          prerelease: false
+#
+#  release:
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ needs.getReleaseInformation.outputs.releaseTag }}
+        run: |
+          gh release create "$tag" \
+              --repo="$GITHUB_REPOSITORY" \
+              --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
+              --generate-notes
