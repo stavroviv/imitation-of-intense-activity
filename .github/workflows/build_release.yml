@@ -1,4 +1,4 @@
-name: Build release
+name: Build release - ${{ github.ref_name }}
 
 env:
   APP_NAME: D7.mvs
