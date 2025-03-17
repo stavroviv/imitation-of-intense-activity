@@ -20,7 +20,7 @@ jobs:
       - name: Show input tag
         id: show-release-tag
         run: |
-          echo " ${{ inputs.releaseVersion }}"
+          echo "${{ inputs.releaseVersion }}"
   build:
     runs-on: ubuntu-latest
     steps:
