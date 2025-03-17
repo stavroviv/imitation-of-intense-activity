@@ -37,6 +37,7 @@ jobs:
           
           
           TAG=$(git describe --exact-match --tags "${{ github.sha }}" 2>/dev/null)
+          echo "DEBUG: $TAG"
           if [ "$TAG" != "" ]; then
             echo "❌ The latest commit is already tagged with tag: $TAG. Exiting..."
             exit 1
