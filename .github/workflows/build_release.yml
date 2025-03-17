@@ -31,6 +31,12 @@ jobs:
             exit 1;
           }
           
+          TAG=$(git describe --exact-match --tags "${{ github.sha }}" 2>/dev/null)
+          if [ $? -eq 0 ]; then
+            echo "❌ The latest commit is already tagged with tag: $TAG. Exiting..."
+            exit 1
+          fi
+          
           RELEASE_VERSION=$(echo "$BRANCH_NAME" | sed 's/^release\///')
           echo "Release version: $RELEASE_VERSION"
           
