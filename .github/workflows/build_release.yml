@@ -74,7 +74,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: Create github release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ needs.getReleaseInformation.outputs.releaseTag }}
         run: |
           gh release create "$TAG" \
