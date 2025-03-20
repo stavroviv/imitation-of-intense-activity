@@ -23,7 +23,6 @@ jobs:
           echo "${{ inputs.releaseVersion }}"
   build:
     runs-on: ubuntu-latest
-    environment: test-env
     steps:
       - uses: actions/checkout@v4
         with:
