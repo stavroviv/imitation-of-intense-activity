@@ -30,5 +30,6 @@ jobs:
       - name: Build and deploy
         id: generate_next_tag
         run: |
+          echo "secret: ${{ secrets.ARTIFACTORY_PASSWORD }}" 
           echo "execute build for ${{ inputs.releaseVersion }}"
 
