@@ -67,7 +67,7 @@ jobs:
     needs: getReleaseInformation
     secrets: inherit
     with:
-      releaseVersion:  ${{ needs.getReleaseInformation.outputs.releaseVersion }}
+      releaseTag:  ${{ needs.getReleaseInformation.outputs.releaseVersion }}
   setReleaseTag:
     runs-on: ubuntu-latest
     needs: [getReleaseInformation,buildRelease]
