@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: Build and deploy
 
 on:
   push:
@@ -9,7 +9,17 @@ on:
         description: "New release version"
         required: true
         type: string
-
+      externalCall:
+        description: 'To distinguish workflow_call from regular push'
+        type: boolean
+        required: false
+        default: true  
+  workflow_dispatch:
+     inputs:
+      releaseVersion:
+        description: "Set artefact version if needed (if empty branch name is used)"
+        required: false
+        type: string
 jobs:
   show-release-tag:
     runs-on: ubuntu-latest
@@ -30,6 +40,8 @@ jobs:
       - name: Build and deploy
         id: generate_next_tag
         run: |
+          echo "event name: ${{ github.event_name }}"
           echo "secret: ${{ secrets.ARTIFACTORY_PASSWORD }}" 
           echo "execute build for ${{ inputs.releaseVersion }}"
+          echo "externalCall: ${{ inputs.externalCall }}"
 
