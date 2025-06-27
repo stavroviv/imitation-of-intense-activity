@@ -9,7 +9,12 @@ on:
         description: "New release version"
         required: true
         type: string
-
+  workflow_dispatch:
+     inputs:
+      releaseVersion:
+        description: "Set artefact version if needed (if empty branch name is used)"
+        required: false
+        type: string
 jobs:
   show-release-tag:
     runs-on: ubuntu-latest
