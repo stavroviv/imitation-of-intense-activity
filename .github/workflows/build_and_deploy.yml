@@ -9,15 +9,10 @@ on:
         description: "New release version"
         required: true
         type: string
-      externalCall:
-        description: 'To distinguish workflow_call from regular push'
-        type: boolean
-        required: false
-        default: true  
   workflow_dispatch:
      inputs:
       releaseTag:
-        description: "Image name (if empty, the branch name will be used)"
+        description: "Version name (if empty, the branch name will be used)"
         required: false
         type: string
 jobs:
@@ -41,7 +36,7 @@ jobs:
         id: generate_next_tag
         run: |
           VERSION_NAME=${GITHUB_REF_NAME//\//_}
-          if [ "${{ inputs.externalCall }}" == "true" ] || [ -n "${{ inputs.releaseTag }}" ]; then
+          if [ -n "${{ inputs.releaseTag }}" ]; then
             VERSION_NAME=${{ inputs.releaseTag }}  
           fi
           echo "event name: ${{ github.event_name }}"
