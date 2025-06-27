@@ -40,6 +40,9 @@ jobs:
       - name: Build and deploy
         id: generate_next_tag
         run: |
+          if [ "${{ inputs.externalCall }}" == "true" ]; then
+            echo "this is externall call!!!!"
+          fi
           echo "event name: ${{ github.event_name }}"
           echo "secret: ${{ secrets.ARTIFACTORY_PASSWORD }}" 
           echo "execute build for ${{ inputs.releaseVersion }}"
