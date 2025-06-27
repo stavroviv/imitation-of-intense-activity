@@ -5,7 +5,7 @@ on:
     branches: [ "master" ]
   workflow_call:
     inputs:
-      releaseVersion:
+      releaseTag:
         description: "New release version"
         required: true
         type: string
@@ -16,8 +16,8 @@ on:
         default: true  
   workflow_dispatch:
      inputs:
-      releaseVersion:
-        description: "Set artefact version if needed (if empty branch name is used)"
+      releaseTag:
+        description: "Image name (if empty, the branch name will be used)"
         required: false
         type: string
 jobs:
@@ -40,8 +40,10 @@ jobs:
       - name: Build and deploy
         id: generate_next_tag
         run: |
+          VERSION_NAME=${GITHUB_REF_NAME//\//_}
+          if [ "${{ inputs.externalCall }}" == "true" ] || [ -n "${{ inputs.releaseTag }}" ]; then
+            VERSION_NAME=${{ inputs.releaseTag }}  
+          fi
           echo "event name: ${{ github.event_name }}"
-          echo "secret: ${{ secrets.ARTIFACTORY_PASSWORD }}" 
-          echo "execute build for ${{ inputs.releaseVersion }}"
-          echo "externalCall: ${{ inputs.externalCall }}"
+          echo "VERSION_NAME: $VERSION_NAME"
 
